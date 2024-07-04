@@ -6,8 +6,6 @@ interface Props {}
 
 const App: FC<Props> = props => {
   return (
-    // <View style={styles.container}>
-    // </View>
     <SignUp />
   );
 };

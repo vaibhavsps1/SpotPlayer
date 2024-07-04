@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/cli-platform-ios": "^13.6.9",
+    "package": "^1.0.1",
     "react": "18.2.0",
     "react-native": "0.74.2"
   },
