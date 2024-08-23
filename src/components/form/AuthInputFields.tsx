@@ -1,40 +1,46 @@
+import AppInput from '../../ui/AppInput';
+import colors from '@utils/colors';
+import {useFormikContext} from 'formik';
+import {FC} from 'react';
 import {
-  StyleProp,
+  View,
   StyleSheet,
   Text,
   TextInputProps,
-  View,
+  StyleProp,
   ViewStyle,
 } from 'react-native';
-import React, {FC} from 'react';
-import AppInput from 'ui/AppInput';
-import colors from 'utils/colors';
 
 interface Props {
+  name: string;
   label?: string;
   placeholder?: string;
   keyboardType?: TextInputProps['keyboardType'];
   autoCapitalize?: TextInputProps['autoCapitalize'];
-  secureTextEntry?: TextInputProps['secureTextEntry'];
+  secureTextEntry?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
-  errorMsg?: string;
-  onChange?: (text: string) => void;
 }
 
-const AuthInputFields: FC<Props> = props => {
+const AuthInputField: FC<Props> = props => {
+  const {handleChange, values, errors, touched} = useFormikContext<{
+    [key: string]: string;
+  }>();
+
   const {
     label,
     placeholder,
-    keyboardType,
     autoCapitalize,
+    keyboardType,
     secureTextEntry,
     containerStyle,
-    errorMsg,
-    onChange,
+    name,
   } = props;
+
+  const errorMsg = errors[name];
+
   return (
     <View style={[styles.container, containerStyle]}>
-      <View style={{}}>
+      <View style={styles.labelContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={styles.errorMsg}>{errorMsg}</Text>
       </View>
@@ -43,16 +49,27 @@ const AuthInputFields: FC<Props> = props => {
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
         secureTextEntry={secureTextEntry}
-        onChangeText={onChange}
+        onChangeText={handleChange(name)}
+        value={values[name]}
       />
     </View>
   );
 };
 
-export default AuthInputFields;
-
 const styles = StyleSheet.create({
   container: {},
-  label: {padding: 1, color: colors.CONTRAST},
-  errorMsg: {},
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 5,
+  },
+  label: {
+    color: colors.CONTRAST,
+  },
+  errorMsg: {
+    color: colors.ERROR,
+  },
 });
+
+export default AuthInputField;
