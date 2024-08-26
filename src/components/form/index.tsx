@@ -2,8 +2,8 @@ import React, {ReactNode} from 'react';
 import {Formik, FormikHelpers} from 'formik';
 
 interface Props<T> {
-  signUpSchema: any;
   initialValues: any;
+  validationSchema: any;
   onSubmit(values: T, formikHelpers: FormikHelpers<T>): void;
   children: ReactNode;
 }
@@ -18,7 +18,7 @@ const Form = <T extends object>(props: Props<T>) => {
       //   console.log('values -->', values);
       // }}
       initialValues={props.initialValues}
-      validationSchema={props.signUpSchema}>
+      validationSchema={props.validationSchema}>
       {props.children}
     </Formik>
   );
